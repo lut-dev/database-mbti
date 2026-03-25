@@ -33,6 +33,14 @@
             border-bottom: 3px solid #4f46e5;
             color: #4f46e5;
         }
+
+        .mbti-btn {
+            transition: all 0.2s;
+        }
+        
+        .mbti-btn:active {
+            transform: scale(0.95);
+        }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-900">
@@ -214,23 +222,60 @@
         <section id="stack" class="bg-slate-900 rounded-3xl p-8 md:p-12 text-white shadow-2xl overflow-hidden relative">
             <div class="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12">
                 <div>
-                    <h2 class="text-3xl font-bold mb-6">Visualisasi Function Stack</h2>
+                    <h2 class="text-3xl font-bold mb-6">Visualisasi Function Stack (16 Tipe)</h2>
                     <p class="text-slate-400 mb-8 leading-relaxed">
-                        Pilih tipe kepribadian untuk melihat bagaimana fungsi kognitif tersusun dalam urutan prioritas (Dominan hingga Inferior).
+                        Pilih tipe kepribadian untuk melihat bagaimana fungsi kognitif tersusun dalam urutan prioritas.
                     </p>
                     
-                    <div class="flex flex-wrap gap-2 mb-8">
-                        <!-- Buttons for major types mentioned -->
-                        <button onclick="updateStack('ESTJ')" class="px-4 py-2 bg-slate-800 hover:bg-indigo-600 rounded-lg text-sm font-bold transition-colors">ESTJ</button>
-                        <button onclick="updateStack('INTJ')" class="px-4 py-2 bg-slate-800 hover:bg-indigo-600 rounded-lg text-sm font-bold transition-colors">INTJ</button>
-                        <button onclick="updateStack('INTP')" class="px-4 py-2 bg-slate-800 hover:bg-indigo-600 rounded-lg text-sm font-bold transition-colors">INTP</button>
-                        <button onclick="updateStack('ENFJ')" class="px-4 py-2 bg-slate-800 hover:bg-indigo-600 rounded-lg text-sm font-bold transition-colors">ENFJ</button>
-                        <button onclick="updateStack('ISFP')" class="px-4 py-2 bg-slate-800 hover:bg-indigo-600 rounded-lg text-sm font-bold transition-colors">ISFP</button>
+                    <div class="space-y-6">
+                        <!-- Analyst Group -->
+                        <div>
+                            <p class="text-xs font-bold text-indigo-400 uppercase tracking-widest mb-3">Analysts</p>
+                            <div class="flex flex-wrap gap-2">
+                                <button onclick="updateStack('INTJ')" class="mbti-btn px-3 py-1.5 bg-slate-800 hover:bg-indigo-600 rounded-lg text-xs font-bold">INTJ</button>
+                                <button onclick="updateStack('INTP')" class="mbti-btn px-3 py-1.5 bg-slate-800 hover:bg-indigo-600 rounded-lg text-xs font-bold">INTP</button>
+                                <button onclick="updateStack('ENTJ')" class="mbti-btn px-3 py-1.5 bg-slate-800 hover:bg-indigo-600 rounded-lg text-xs font-bold">ENTJ</button>
+                                <button onclick="updateStack('ENTP')" class="mbti-btn px-3 py-1.5 bg-slate-800 hover:bg-indigo-600 rounded-lg text-xs font-bold">ENTP</button>
+                            </div>
+                        </div>
+
+                        <!-- Diplomat Group -->
+                        <div>
+                            <p class="text-xs font-bold text-emerald-400 uppercase tracking-widest mb-3">Diplomats</p>
+                            <div class="flex flex-wrap gap-2">
+                                <button onclick="updateStack('INFJ')" class="mbti-btn px-3 py-1.5 bg-slate-800 hover:bg-emerald-600 rounded-lg text-xs font-bold">INFJ</button>
+                                <button onclick="updateStack('INFP')" class="mbti-btn px-3 py-1.5 bg-slate-800 hover:bg-emerald-600 rounded-lg text-xs font-bold">INFP</button>
+                                <button onclick="updateStack('ENFJ')" class="mbti-btn px-3 py-1.5 bg-slate-800 hover:bg-emerald-600 rounded-lg text-xs font-bold">ENFJ</button>
+                                <button onclick="updateStack('ENFP')" class="mbti-btn px-3 py-1.5 bg-slate-800 hover:bg-emerald-600 rounded-lg text-xs font-bold">ENFP</button>
+                            </div>
+                        </div>
+
+                        <!-- Sentinel Group -->
+                        <div>
+                            <p class="text-xs font-bold text-blue-400 uppercase tracking-widest mb-3">Sentinels</p>
+                            <div class="flex flex-wrap gap-2">
+                                <button onclick="updateStack('ISTJ')" class="mbti-btn px-3 py-1.5 bg-slate-800 hover:bg-blue-600 rounded-lg text-xs font-bold">ISTJ</button>
+                                <button onclick="updateStack('ISFJ')" class="mbti-btn px-3 py-1.5 bg-slate-800 hover:bg-blue-600 rounded-lg text-xs font-bold">ISFJ</button>
+                                <button onclick="updateStack('ESTJ')" class="mbti-btn px-3 py-1.5 bg-slate-800 hover:bg-blue-600 rounded-lg text-xs font-bold">ESTJ</button>
+                                <button onclick="updateStack('ESFJ')" class="mbti-btn px-3 py-1.5 bg-slate-800 hover:bg-blue-600 rounded-lg text-xs font-bold">ESFJ</button>
+                            </div>
+                        </div>
+
+                        <!-- Explorer Group -->
+                        <div>
+                            <p class="text-xs font-bold text-amber-400 uppercase tracking-widest mb-3">Explorers</p>
+                            <div class="flex flex-wrap gap-2">
+                                <button onclick="updateStack('ISTP')" class="mbti-btn px-3 py-1.5 bg-slate-800 hover:bg-amber-600 rounded-lg text-xs font-bold">ISTP</button>
+                                <button onclick="updateStack('ISFP')" class="mbti-btn px-3 py-1.5 bg-slate-800 hover:bg-amber-600 rounded-lg text-xs font-bold">ISFP</button>
+                                <button onclick="updateStack('ESTP')" class="mbti-btn px-3 py-1.5 bg-slate-800 hover:bg-amber-600 rounded-lg text-xs font-bold">ESTP</button>
+                                <button onclick="updateStack('ESFP')" class="mbti-btn px-3 py-1.5 bg-slate-800 hover:bg-amber-600 rounded-lg text-xs font-bold">ESFP</button>
+                            </div>
+                        </div>
                     </div>
 
-                    <div id="type-description" class="p-6 bg-slate-800/50 rounded-2xl border border-slate-700">
-                        <h4 id="display-type-name" class="text-xl font-bold mb-2">Pilih Tipe</h4>
-                        <p id="display-type-desc" class="text-slate-400 text-sm">Klik salah satu tombol di atas untuk menganalisis strukturnya.</p>
+                    <div id="type-description" class="p-6 mt-8 bg-slate-800/50 rounded-2xl border border-slate-700">
+                        <h4 id="display-type-name" class="text-xl font-bold mb-2 text-indigo-300">Pilih Tipe</h4>
+                        <p id="display-type-desc" class="text-slate-400 text-sm leading-relaxed italic">Klik salah satu tombol di atas untuk menganalisis strukturnya.</p>
                     </div>
                 </div>
 
@@ -238,28 +283,28 @@
                     <!-- The Stack Display -->
                     <div id="stack-display" class="space-y-4">
                         <!-- Dominant -->
-                        <div class="flex items-center gap-4 bg-slate-800 p-4 rounded-xl border-l-8 border-indigo-500 translate-x-0 transition-transform">
-                            <div class="w-12 text-xs font-bold text-slate-500">DOM</div>
-                            <div id="stack-dom-tag" class="bg-indigo-600 px-3 py-1 rounded text-sm font-black">??</div>
-                            <div id="stack-dom-name" class="text-sm font-medium">Fungsi Utama</div>
+                        <div class="flex items-center gap-4 bg-slate-800 p-4 rounded-xl border-l-8 border-indigo-500">
+                            <div class="w-12 text-[10px] font-bold text-slate-500 uppercase">Dom</div>
+                            <div id="stack-dom-tag" class="w-12 text-center bg-indigo-600 px-2 py-1 rounded text-sm font-black">??</div>
+                            <div id="stack-dom-name" class="text-sm font-medium text-slate-200">Fungsi Utama</div>
                         </div>
                         <!-- Aux -->
                         <div class="flex items-center gap-4 bg-slate-800 p-4 rounded-xl border-l-8 border-blue-400">
-                            <div class="w-12 text-xs font-bold text-slate-500">AUX</div>
-                            <div id="stack-aux-tag" class="bg-blue-500 px-3 py-1 rounded text-sm font-black">??</div>
-                            <div id="stack-aux-name" class="text-sm font-medium">Fungsi Pendukung</div>
+                            <div class="w-12 text-[10px] font-bold text-slate-500 uppercase">Aux</div>
+                            <div id="stack-aux-tag" class="w-12 text-center bg-blue-500 px-2 py-1 rounded text-sm font-black">??</div>
+                            <div id="stack-aux-name" class="text-sm font-medium text-slate-200">Fungsi Pendukung</div>
                         </div>
                         <!-- Tert -->
                         <div class="flex items-center gap-4 bg-slate-800 p-4 rounded-xl border-l-8 border-emerald-400">
-                            <div class="w-12 text-xs font-bold text-slate-500">TERT</div>
-                            <div id="stack-tert-tag" class="bg-emerald-500 px-3 py-1 rounded text-sm font-black">??</div>
-                            <div id="stack-tert-name" class="text-sm font-medium">Fungsi Bermain</div>
+                            <div class="w-12 text-[10px] font-bold text-slate-500 uppercase">Tert</div>
+                            <div id="stack-tert-tag" class="w-12 text-center bg-emerald-500 px-2 py-1 rounded text-sm font-black">??</div>
+                            <div id="stack-tert-name" class="text-sm font-medium text-slate-200">Fungsi Bermain</div>
                         </div>
                         <!-- Inf -->
                         <div class="flex items-center gap-4 bg-slate-800 p-4 rounded-xl border-l-8 border-rose-500">
-                            <div class="w-12 text-xs font-bold text-slate-500">INF</div>
-                            <div id="stack-inf-tag" class="bg-rose-500 px-3 py-1 rounded text-sm font-black">??</div>
-                            <div id="stack-inf-name" class="text-sm font-medium">Titik Lemah</div>
+                            <div class="w-12 text-[10px] font-bold text-slate-500 uppercase">Inf</div>
+                            <div id="stack-inf-tag" class="w-12 text-center bg-rose-500 px-2 py-1 rounded text-sm font-black">??</div>
+                            <div id="stack-inf-name" class="text-sm font-medium text-slate-200">Titik Lemah</div>
                         </div>
                     </div>
                 </div>
@@ -278,62 +323,61 @@
 
     <script>
         const mbtiData = {
-            'ESTJ': {
-                name: 'The Administrator',
-                desc: 'Memimpin dengan logika eksternal (Te) dan menjaga kualitas dengan detail memori (Si). Sangat menyukai prosedur yang terorganisir.',
-                stack: ['Te', 'Si', 'Ne', 'Fi'],
-                labels: ['Eksekusi Logis', 'Detail & Prosedur', 'Eksplorasi Ide', 'Nilai Internal']
-            },
-            'INTJ': {
-                name: 'The Architect',
-                desc: 'Membangun visi jangka panjang (Ni) dan merumuskan strategi logis (Te) untuk mencapainya.',
-                stack: ['Ni', 'Te', 'Fi', 'Se'],
-                labels: ['Visi Jangka Panjang', 'Strategi Efisien', 'Integritas Diri', 'Kewaspadaan Fisik']
-            },
-            'INTP': {
-                name: 'The Logician',
-                desc: 'Menganalisis sistem secara mendalam (Ti) dan mengeksplorasi berbagai kemungkinan konsep (Ne).',
-                stack: ['Ti', 'Ne', 'Si', 'Fe'],
-                labels: ['Analisis Sistem', 'Koneksi Ide', 'Penyimpan Data', 'Harmoni Sosial']
-            },
-            'ENFJ': {
-                name: 'The Mentor',
-                desc: 'Fokus pada kebutuhan orang lain (Fe) dan membimbing mereka menuju masa depan yang lebih baik (Ni).',
-                stack: ['Fe', 'Ni', 'Se', 'Ti'],
-                labels: ['Harmoni Kelompok', 'Visi Bermakna', 'Aksi Nyata', 'Logika Kaku']
-            },
-            'ISFP': {
-                name: 'The Artist',
-                desc: 'Hidup berdasarkan nilai personal yang otentik (Fi) dan mengekspresikannya melalui aksi sensorik (Se).',
-                stack: ['Fi', 'Se', 'Ni', 'Te'],
-                labels: ['Nilai Otentik', 'Pengalaman Fisik', 'Visi Intuisi', 'Eksekusi Praktis']
-            }
+            // Analysts
+            'INTJ': { name: 'Architect', desc: 'Pemikir strategis dengan visi tajam untuk masa depan.', stack: ['Ni', 'Te', 'Fi', 'Se'], labels: ['Visi Jangka Panjang', 'Strategi Efisien', 'Nilai Internal', 'Kesadaran Fisik'] },
+            'INTP': { name: 'Logician', desc: 'Pemikir logis yang haus akan pengetahuan dan sistem.', stack: ['Ti', 'Ne', 'Si', 'Fe'], labels: ['Analisis Sistem', 'Koneksi Ide', 'Penyimpan Data', 'Harmoni Sosial'] },
+            'ENTJ': { name: 'Commander', desc: 'Pemimpin berani yang pandai mengatur strategi organisasi.', stack: ['Te', 'Ni', 'Se', 'Fi'], labels: ['Eksekusi Efisien', 'Visi Strategis', 'Aksi Nyata', 'Prinsip Diri'] },
+            'ENTP': { name: 'Debater', desc: 'Pemikir cerdas yang senang mengeksplorasi tantangan intelektual.', stack: ['Ne', 'Ti', 'Fe', 'Si'], labels: ['Kemungkinan Tak Terbatas', 'Logika Kerangka', 'Adaptasi Sosial', 'Detail Memori'] },
+            
+            // Diplomats
+            'INFJ': { name: 'Advocate', desc: 'Idealistis dan mistis, namun sangat terorganisir.', stack: ['Ni', 'Fe', 'Ti', 'Se'], labels: ['Wawasan Dalam', 'Empati Kelompok', 'Logika Internal', 'Respon Lingkungan'] },
+            'INFP': { name: 'Mediator', desc: 'Pribadi yang puitis, baik hati, dan altruistik.', stack: ['Fi', 'Ne', 'Si', 'Te'], labels: ['Autentisitas Diri', 'Kemungkinan Kreatif', 'Pengalaman Masa Lalu', 'Ketertiban Struktur'] },
+            'ENFJ': { name: 'Protagonist', desc: 'Pemimpin kharismatik yang mampu menginspirasi pendengarnya.', stack: ['Fe', 'Ni', 'Se', 'Ti'], labels: ['Koneksi Sosial', 'Visi Bermakna', 'Kehadiran Fisik', 'Analisis Logis'] },
+            'ENFP': { name: 'Campaigner', desc: 'Pribadi yang antusias, kreatif, dan berjiwa bebas.', stack: ['Ne', 'Fi', 'Te', 'Si'], labels: ['Ide Kreatif', 'Nilai Personal', 'Eksekusi Rencana', 'Data Masa Lalu'] },
+
+            // Sentinels
+            'ISTJ': { name: 'Logistician', desc: 'Praktis dan mengutamakan fakta yang tidak diragukan lagi.', stack: ['Si', 'Te', 'Fi', 'Ne'], labels: ['Data & Memori', 'Logika Objektif', 'Integritas Diri', 'Eksplorasi Baru'] },
+            'ISFJ': { name: 'Defender', desc: 'Pelindung yang sangat setia dan hangat.', stack: ['Si', 'Fe', 'Ti', 'Ne'], labels: ['Memori Pengalaman', 'Harmoni Sosial', 'Akurasi Internal', 'Potensi Perubahan'] },
+            'ESTJ': { name: 'Executive', desc: 'Administrator unggul, sangat pandai mengelola sesuatu.', stack: ['Te', 'Si', 'Ne', 'Fi'], labels: ['Eksekusi Logis', 'Detail & Prosedur', 'Eksplorasi Ide', 'Nilai Internal'] },
+            'ESFJ': { name: 'Consul', desc: 'Pribadi yang sangat peduli, sosial, dan populer.', stack: ['Fe', 'Si', 'Ne', 'Ti'], labels: ['Harmoni Sosial', 'Detail Tradisi', 'Gagasan Baru', 'Kerangka Logika'] },
+
+            // Explorers
+            'ISTP': { name: 'Virtuoso', desc: 'Eksperimenter yang berani dan praktis.', stack: ['Ti', 'Se', 'Ni', 'Fe'], labels: ['Analisis Teknis', 'Aksi Sensorik', 'Wawasan Insting', 'Respon Sosial'] },
+            'ISFP': { name: 'Adventurer', desc: 'Seniman yang fleksibel, menawan, dan siap mencoba hal baru.', stack: ['Fi', 'Se', 'Ni', 'Te'], labels: ['Ekspresi Diri', 'Eksplorasi Indra', 'Visi Batin', 'Efisiensi Rencana'] },
+            'ESTP': { name: 'Entrepreneur', desc: 'Pribadi yang cerdas, energik, dan sangat perseptif.', stack: ['Se', 'Ti', 'Fe', 'Ni'], labels: ['Aksi Instan', 'Analisis Praktis', 'Dinamika Sosial', 'Visi Masa Depan'] },
+            'ESFP': { name: 'Entertainer', desc: 'Pribadi yang spontan, energik, dan antusias.', stack: ['Se', 'Fi', 'Te', 'Ni'], labels: ['Antusiasme Fisik', 'Nilai Autentik', 'Organisasi Luar', 'Firasat Batin'] }
         };
 
         function updateStack(type) {
             const data = mbtiData[type];
-            document.getElementById('display-type-name').innerText = type + " - " + data.name;
-            document.getElementById('display-type-desc').innerText = data.desc;
+            const nameEl = document.getElementById('display-type-name');
+            const descEl = document.getElementById('display-type-desc');
+            
+            nameEl.innerText = type + " - " + data.name;
+            descEl.innerText = data.desc;
 
-            // DOM
+            // Update stack tags and names
             document.getElementById('stack-dom-tag').innerText = data.stack[0];
             document.getElementById('stack-dom-name').innerText = data.labels[0];
-            // AUX
+            
             document.getElementById('stack-aux-tag').innerText = data.stack[1];
             document.getElementById('stack-aux-name').innerText = data.labels[1];
-            // TERT
+            
             document.getElementById('stack-tert-tag').innerText = data.stack[2];
             document.getElementById('stack-tert-name').innerText = data.labels[2];
-            // INF
+            
             document.getElementById('stack-inf-tag').innerText = data.stack[3];
             document.getElementById('stack-inf-name').innerText = data.labels[3];
 
-            // Add simple animation
+            // Subtle animation re-trigger
             const stackDisplay = document.getElementById('stack-display');
             stackDisplay.style.opacity = 0;
+            stackDisplay.style.transform = "translateX(10px)";
+            
             setTimeout(() => {
-                stackDisplay.style.transition = 'opacity 0.5s';
+                stackDisplay.style.transition = 'all 0.4s ease-out';
                 stackDisplay.style.opacity = 1;
+                stackDisplay.style.transform = "translateX(0)";
             }, 50);
         }
 
