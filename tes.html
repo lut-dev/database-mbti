@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analisis Mendalam MBTI - Edisi Kerja</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .option-card { transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
+        .option-card:hover { transform: scale(1.01); border-color: #4f46e5; background-color: #f8fafc; }
+        .option-card.selected { border-color: #4f46e5; bg-color: #eff6ff; ring: 2px; }
+    </style>
+</head>
+<body class="bg-slate-50 min-h-screen">
+
+    <div id="app" class="max-w-2xl mx-auto py-12 px-4">
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-extrabold text-slate-900 mb-2 tracking-tight">Tes MBTI Mendalam</h1>
+            <p id="section-label" class="text-indigo-600 font-bold uppercase text-xs tracking-widest">Dimensi 1: Energi</p>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="mb-10">
+            <div class="flex justify-between text-xs font-bold mb-2 text-slate-400">
+                <span id="progress-text">Pertanyaan 1/20</span>
+                <span id="percent-text">0%</span>
+            </div>
+            <div class="w-full bg-slate-200 rounded-full h-2.5 shadow-sm">
+                <div id="progress-bar" class="bg-indigo-600 h-2.5 rounded-full transition-all duration-500" style="width: 0%"></div>
+            </div>
+        </div>
+
+        <!-- Question Container -->
+        <div id="question-container" class="bg-white rounded-3xl shadow-xl p-8 border border-slate-100 relative overflow-hidden">
+            <div id="question-content">
+                <h2 id="question-title" class="text-xl font-bold text-slate-800 mb-8 leading-snug"></h2>
+                
+                <div class="space-y-4">
+                    <button onclick="handleSelect('A')" class="option-card w-full text-left p-6 rounded-2xl border-2 border-slate-100 bg-white flex items-start group">
+                        <div class="w-8 h-8 rounded-lg bg-slate-100 text-slate-500 flex items-center justify-center font-bold mr-4 group-hover:bg-indigo-600 group-hover:text-white shrink-0">A</div>
+                        <span id="option-a-text" class="text-slate-700 font-medium leading-relaxed"></span>
+                    </button>
+
+                    <button onclick="handleSelect('B')" class="option-card w-full text-left p-6 rounded-2xl border-2 border-slate-100 bg-white flex items-start group">
+                        <div class="w-8 h-8 rounded-lg bg-slate-100 text-slate-500 flex items-center justify-center font-bold mr-4 group-hover:bg-indigo-600 group-hover:text-white shrink-0">B</div>
+                        <span id="option-b-text" class="text-slate-700 font-medium leading-relaxed"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Result Card -->
+        <div id="result-card" class="hidden animate-in fade-in duration-700">
+            <div class="bg-white rounded-3xl shadow-2xl p-10 border border-slate-100 text-center">
+                <p class="text-slate-400 font-bold text-xs uppercase tracking-widest mb-2">Tipe Kepribadian Anda</p>
+                <h1 id="mbti-type" class="text-7xl font-black text-indigo-600 mb-6 tracking-tighter">....</h1>
+                
+                <div class="grid grid-cols-2 gap-4 mb-8">
+                    <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100">
+                        <p class="text-[10px] font-bold text-slate-400 uppercase">Fungsi Dominan</p>
+                        <p id="dom-func" class="text-xl font-black text-slate-800">--</p>
+                    </div>
+                    <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100">
+                        <p class="text-[10px] font-bold text-slate-400 uppercase">Fungsi Aux</p>
+                        <p id="aux-func" class="text-xl font-black text-slate-800">--</p>
+                    </div>
+                </div>
+
+                <div id="description-box" class="text-left bg-indigo-50 p-6 rounded-2xl text-slate-700 text-sm leading-relaxed mb-8">
+                </div>
+
+                <button onclick="location.reload()" class="w-full bg-indigo-600 text-white font-bold py-4 rounded-2xl hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-200">
+                    Mulai Ulang Tes
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            // DIMENSI 1: ENERGI (E vs I) - 5 Soal
+            { section: "Energi", q: "Setelah seharian penuh berkoordinasi dengan banyak orang di lapangan, bagaimana perasaan Anda?", a: "Semakin semangat dan berenergi untuk melanjutkan kegiatan sosial lain.", b: "Merasa butuh waktu sendiri untuk 'charge' energi tanpa gangguan siapapun.", trait: "EI" },
+            { section: "Energi", q: "Bagaimana cara Anda memproses masalah yang rumit?", a: "Mendiskusikannya langsung dengan orang lain untuk mendapatkan perspektif luar.", b: "Memikirkannya secara mendalam sendirian sebelum membicarakannya.", trait: "EI" },
+            { section: "Energi", q: "Di kantor, Anda lebih dikenal sebagai sosok yang...", a: "Mudah didekati, ekspresif, dan suka keramaian.", b: "Tenang, observatif, dan lebih suka lingkaran kecil.", trait: "EI" },
+            { section: "Energi", q: "Saat sedang rapat, Anda cenderung...", a: "Langsung mengutarakan ide begitu terpikirkan.", b: "Mendengarkan semua orang dulu, lalu bicara jika diperlukan.", trait: "EI" },
+            { section: "Energi", q: "Mana yang lebih melelahkan bagi Anda?", a: "Duduk diam sendirian di meja kerja sepanjang hari tanpa interaksi.", b: "Harus terus menerus presentasi dan bicara di depan umum tanpa henti.", trait: "EI" },
+
+            // DIMENSI 2: INFORMASI (S vs N) - 5 Soal
+            { section: "Informasi", q: "Saat menerima instruksi baru, apa yang Anda butuhkan?", a: "Detail spesifik, langkah demi langkah, dan contoh nyata.", b: "Gambaran besar, konsep utama, dan tujuan akhirnya saja.", trait: "SN" },
+            { section: "Informasi", q: "Anda lebih percaya pada...", a: "Pengalaman masa lalu dan data yang sudah terbukti.", b: "Firasat dan potensi ide-ide baru yang belum pernah dicoba.", trait: "SN" },
+            { section: "Informasi", q: "Jika melihat sebuah restoran baru, apa yang pertama kali Anda perhatikan?", a: "Kebersihan meja, menu fisik, dan harga yang tertera.", b: "Konsep uniknya, suasana masa depannya, dan peluang bisnisnya.", trait: "SN" },
+            { section: "Informasi", q: "Dalam menyelesaikan tugas, Anda lebih suka...", a: "Menyempurnakan metode yang sudah ada.", b: "Menemukan cara baru yang lebih kreatif dan berbeda.", trait: "SN" },
+            { section: "Informasi", q: "Anda sering dianggap sebagai orang yang...", a: "Praktis dan membumi (realistis).", b: "Imajinatif dan visioner (teoretis).", trait: "SN" },
+
+            // DIMENSI 3: KEPUTUSAN (T vs F) - 5 Soal
+            { section: "Keputusan", q: "Saat harus menegur staf yang kinerjanya buruk tapi dia sedang ada masalah keluarga, Anda...", a: "Tetap menegurnya secara profesional demi target tim (objektif).", b: "Memberinya kelonggaran karena mempertimbangkan kondisinya (empati).", trait: "TF" },
+            { section: "Keputusan", q: "Mana yang lebih penting bagi Anda dalam sebuah tim?", a: "Kejelasan tugas dan kompetensi setiap anggota.", b: "Harmoni antar anggota dan kenyamanan suasana kerja.", trait: "TF" },
+            { section: "Keputusan", q: "Kritik yang paling masuk akal bagi Anda adalah...", a: "Kritik yang tajam, logis, dan berdasarkan fakta kerja.", b: "Kritik yang disampaikan dengan halus dan memperhatikan perasaan.", trait: "TF" },
+            { section: "Keputusan", q: "Saat memutuskan sesuatu, Anda menggunakan...", a: "Analisis pro-kontra yang rasional.", b: "Nilai pribadi dan dampak emosional bagi orang sekitar.", trait: "TF" },
+            { section: "Keputusan", q: "Anda merasa bangga jika dianggap sebagai orang yang...", a: "Adil dan tidak memihak (objektif).", b: "Peka dan suportif (hangat).", trait: "TF" },
+
+            // DIMENSI 4: STRUKTUR (J vs P) - 5 Soal
+            { section: "Struktur", q: "Bagaimana gaya Anda dalam mengerjakan sebuah project?", a: "Direncanakan dengan matang sejak awal dengan deadline ketat.", b: "Fleksibel, mengikuti arus, dan biasanya kencang di menit-menit terakhir.", trait: "JP" },
+            { section: "Struktur", q: "Jika ada rencana liburan yang tiba-tiba berubah, Anda...", a: "Merasa kesal karena jadwal yang sudah disusun menjadi berantakan.", b: "Sangat santai dan justru menikmati kejutan atau perubahan tersebut.", trait: "JP" },
+            { section: "Struktur", q: "Meja kerja Anda biasanya...", a: "Rapi, terorganisir, dan semua pada tempatnya.", b: "Berantakan secara kreatif, namun Anda tahu di mana letak barangnya.", trait: "JP" },
+            { section: "Struktur", q: "Anda lebih nyaman jika hidup Anda...", a: "Punya kepastian dan struktur yang jelas.", b: "Punya banyak pilihan dan kebebasan untuk berubah pikiran.", trait: "JP" },
+            { section: "Struktur", q: "Dalam bekerja, mana yang paling menggambarkan Anda?", a: "Selesaikan sekarang agar tenang nanti.", b: "Tunggu sampai mood atau ide muncul, baru eksekusi.", trait: "JP" }
+        ];
+
+        let currentStep = 0;
+        let scores = { E: 0, I: 0, S: 0, N: 0, T: 0, F: 0, J: 0, P: 0 };
+
+        function updateUI() {
+            if (currentStep < questions.length) {
+                const q = questions[currentStep];
+                document.getElementById('section-label').innerText = `Bagian: ${q.section}`;
+                document.getElementById('question-title').innerText = q.q;
+                document.getElementById('option-a-text').innerText = q.a;
+                document.getElementById('option-b-text').innerText = q.b;
+                
+                const progress = (currentStep / questions.length) * 100;
+                document.getElementById('progress-bar').style.width = `${progress}%`;
+                document.getElementById('progress-text').innerText = `Pertanyaan ${currentStep + 1}/${questions.length}`;
+                document.getElementById('percent-text').innerText = `${Math.round(progress)}%`;
+            } else {
+                showResults();
+            }
+        }
+
+        function handleSelect(choice) {
+            const q = questions[currentStep];
+            const traitPair = q.trait; // "EI", "SN", etc.
+            const primary = traitPair[0];
+            const secondary = traitPair[1];
+
+            if (choice === 'A') scores[primary]++;
+            else scores[secondary]++;
+
+            currentStep++;
+            updateUI();
+        }
+
+        function showResults() {
+            document.getElementById('question-container').classList.add('hidden');
+            document.getElementById('result-card').classList.remove('hidden');
+            document.getElementById('section-label').innerText = "Analisis Selesai";
+
+            const type = [
+                scores.E >= scores.I ? 'E' : 'I',
+                scores.S >= scores.N ? 'S' : 'N',
+                scores.T >= scores.F ? 'T' : 'F',
+                scores.J >= scores.P ? 'J' : 'P'
+            ].join('');
+
+            document.getElementById('mbti-type').innerText = type;
+            
+            // Logic for Function Stack
+            const stacks = {
+                'ESTJ': ['Te', 'Si'], 'ESTP': ['Se', 'Ti'], 'ISTJ': ['Si', 'Te'], 'ISTP': ['Ti', 'Se'],
+                'ESFJ': ['Fe', 'Si'], 'ESFP': ['Se', 'Fi'], 'ISFJ': ['Si', 'Fe'], 'ISFP': ['Fi', 'Se'],
+                'ENTJ': ['Te', 'Ni'], 'ENTP': ['Ne', 'Ti'], 'INTJ': ['Ni', 'Te'], 'INTP': ['Ti', 'Ne']
+            };
+
+            const stack = stacks[type] || ['??', '??'];
+            document.getElementById('dom-func').innerText = stack[0];
+            document.getElementById('aux-func').innerText = stack[1];
+
+            let desc = "";
+            if (type === 'ESTP') {
+                desc = "<b>Eksekutor Taktis Lapangan:</b> Anda sangat hebat dalam membaca situasi saat ini dan mengambil tindakan instan. Anda tidak suka dibatasi oleh birokrasi dan lebih memilih membuktikan hasil lewat aksi nyata.";
+            } else if (type === 'ESTJ') {
+                desc = "<b>Administrator Efisien:</b> Anda adalah pengelola yang handal. Anda sangat menghargai struktur, jadwal, dan prosedur untuk memastikan semua target tercapai secara teratur.";
+            } else {
+                desc = "Anda memiliki kombinasi unik antara preferensi Anda. Fokuslah pada bagaimana fungsi dominan Anda membantu Anda dalam mengambil keputusan di pekerjaan sehari-hari.";
+            }
+            document.getElementById('description-box').innerHTML = desc;
+        }
+
+        updateUI();
+    </script>
+</body>
+</html>
