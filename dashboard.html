@@ -37,6 +37,16 @@
                 </div>
             </div>
 
+            <div class="mb-6">
+                <label for="search-name" class="sr-only">Cari nama</label>
+                <div class="relative">
+                    <input id="search-name" type="text" oninput="searchByName(this.value)" placeholder="Cari nama kandidat..." class="w-full rounded-2xl border border-slate-200 px-4 py-3 pr-10 text-slate-700 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200">
+                    <button type="button" onclick="searchByName(document.getElementById('search-name').value)" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-indigo-600">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1110.5 3a7.5 7.5 0 016.15 12.65z" /></svg>
+                    </button>
+                </div>
+            </div>
+
             <div class="grid grid-cols-1 gap-6">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div class="p-4 bg-slate-50 rounded-xl border border-slate-100">
@@ -100,6 +110,7 @@
         // URL yang kamu berikan
         const scriptURL = "https://script.google.com/macros/s/AKfycbxb7Il9iSi3xgGNaJB_P7q8NkanehLwugZT28NIwvZlHMKjtgWgYJHBTx6On58aJdhcLQ/exec";
         let allData = [];
+        let filteredData = [];
         let currentIndex = 0;
 
         async function loadDashboard() {
@@ -109,11 +120,12 @@
                 
                 if (allData && allData.length > 0) {
                     // Balik data agar yang terbaru muncul di halaman pertama
-                    allData.reverse(); 
+                    allData.reverse();
+                    filteredData = allData;
                     render(0);
                     document.getElementById('loading').classList.add('hidden');
                     document.getElementById('content').classList.remove('hidden');
-                    document.getElementById('total-data').innerText = allData.length;
+                    document.getElementById('total-data').innerText = filteredData.length;
                 } else {
                     document.getElementById('loading').innerHTML = "<p class='text-slate-400'>Belum ada data masuk.</p>";
                 }
@@ -124,7 +136,7 @@
         }
 
         function render(index) {
-            const item = allData[index];
+            const item = filteredData[index];
             
             // Header Utama
             document.getElementById('view-nama').innerText = item.nama_lengkap || 'TANPA NAMA';
@@ -143,8 +155,37 @@
             document.getElementById('current-index').innerText = index + 1;
         }
 
+        function searchByName(query) {
+            const normalized = query.trim().toLowerCase();
+
+            if (!normalized) {
+                filteredData = allData;
+                currentIndex = 0;
+                render(currentIndex);
+                document.getElementById('total-data').innerText = filteredData.length;
+                return;
+            }
+
+            filteredData = allData.filter(item => (item.nama_lengkap || '').toLowerCase().includes(normalized));
+            currentIndex = 0;
+            document.getElementById('total-data').innerText = filteredData.length;
+
+            if (filteredData.length > 0) {
+                render(currentIndex);
+            } else {
+                document.getElementById('view-nama').innerText = 'Tidak ditemukan';
+                document.getElementById('view-mbti').innerText = '-';
+                document.getElementById('view-q1').innerText = '-';
+                document.getElementById('view-q2').innerText = '-';
+                document.getElementById('view-q3').innerText = '-';
+                document.getElementById('view-q4').innerText = '-';
+                document.getElementById('view-perilaku').innerText = 'Nama tidak ditemukan. Coba kata kunci lain.';
+                document.getElementById('current-index').innerText = '0';
+            }
+        }
+
         function nextData() {
-            if (currentIndex < allData.length - 1) {
+            if (currentIndex < filteredData.length - 1) {
                 currentIndex++;
                 render(currentIndex);
             }
